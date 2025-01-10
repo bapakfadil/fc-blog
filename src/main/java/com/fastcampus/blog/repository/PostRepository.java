@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends CrudRepository<Post,Integer> {
-    Optional<Post> findFirstBySlug(String slug);
+    Optional<Post> findFirstBySlugAndIsDeleted(String slug, Boolean isDeleted);
 }
