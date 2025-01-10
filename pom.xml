@@ -65,6 +65,24 @@
 			<artifactId>mysql-connector-j</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-mysql -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-maven-plugin -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-maven-plugin</artifactId>
+			<version>10.17.2</version>
+		</dependency>
 
 	</dependencies>
 
