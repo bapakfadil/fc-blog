@@ -15,8 +15,9 @@ public class CommentController {
     @GetMapping
     public Iterable<Comment> getComments(@RequestParam(required = false) String postSlug,
                                          @RequestParam(required = false) Integer pageNo,
-                                         @RequestParam(required = false) Integer limit) {
-       return commentService.getComments(postSlug, pageNo, limit);
+                                         @RequestParam(required = false) Integer limit)
+    {
+        return commentService.getComments(postSlug, pageNo, limit);
     }
 
     @GetMapping("/{id}")
