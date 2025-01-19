@@ -2,8 +2,11 @@ package com.fastcampus.blog.service;
 
 import com.fastcampus.blog.entity.Comment;
 import com.fastcampus.blog.entity.Post;
+import com.fastcampus.blog.mapper.CommentMapper;
 import com.fastcampus.blog.repository.CommentRepository;
 import com.fastcampus.blog.repository.PostRepository;
+import com.fastcampus.blog.request.CreateCommentRequest;
+import com.fastcampus.blog.response.CreateCommentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -34,18 +37,20 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment createComment(Comment comment) {
-        Post post = postRepository.findFirstBySlugAndIsDeleted(comment.getPost().getSlug(), false).orElse(null);
+    public CreateCommentResponse createComment(CreateCommentRequest request) {
+        Post post = postRepository.findFirstBySlugAndIsDeleted(request.getPost().getSlug(), false).orElse(null);
         if (post == null) {
             return null;
         }
-        comment.getPost().setId(post.getId());
+        Comment comment = CommentMapper.INSTANCE.mapFromCreateCommentRequest(request);
+
         comment.setCreatedAt(Instant.now().getEpochSecond());
-        comment = commentRepository.save(comment);
+        comment.getPost().setId(post.getId());
+        commentRepository.save(comment);
 
         post.setCommentCount(post.getCommentCount() + 1);
         postRepository.save(post);
 
-        return comment;
+        return CommentMapper.INSTANCE.mapToCreateCommentResponse(comment);
     }
 }
