@@ -1,6 +1,7 @@
 package com.fastcampus.blog.service;
 
 import com.fastcampus.blog.entity.Post;
+import com.fastcampus.blog.mapper.PostMapper;
 import com.fastcampus.blog.repository.PostRepository;
 import com.fastcampus.blog.request.CreatePostRequest;
 import com.fastcampus.blog.response.CreatePostResponse;
@@ -28,21 +29,13 @@ public class PostService {
     }
 
     public CreatePostResponse createPost(CreatePostRequest createPostRequest) {
-        Post post = new Post();
 
-        post.setTitle(createPostRequest.getTitle());
-        post.setBody(createPostRequest.getBody());
-        post.setSlug(createPostRequest.getSlug());
+        Post post = PostMapper.INSTANCE.map(createPostRequest);
         post.setCommentCount(0L);
         post.setCreatedAt(Instant.now().getEpochSecond());
         post = postRepository.save(post);
 
-        return new CreatePostResponse().builder()
-                .title(post.getTitle())
-                .slug(post.getSlug())
-                .body(post.getBody())
-                .commentCount(post.getCommentCount())
-                .build();
+        return PostMapper.INSTANCE.map(post);
     }
 
     public Post updatePostBySlug(String slug, Post post) {
