@@ -1,5 +1,7 @@
 package com.bapakfadil.blog.services;
 
+import java.time.Instant;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ public class PostService {
     }
 
     public Post createPost(Post post) {
+        post.setCreatedAt(Instant.now().getEpochSecond());
         return postRepository.save(post);
     }
 
@@ -59,6 +62,7 @@ public class PostService {
         }
         
         post.setPublished(true);
+        post.setPublishedAt(Instant.now().getEpochSecond());
         return postRepository.save(post);
     }
 
