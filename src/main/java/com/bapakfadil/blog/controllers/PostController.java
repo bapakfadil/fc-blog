@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-
 @RestController
 public class PostController {
 
@@ -22,7 +20,7 @@ public class PostController {
     PostService postService;
 
     @GetMapping("/")
-    public List<Post> getPost() {
+    public Iterable<Post> getPost() {
         return postService.getPosts();
     }
 

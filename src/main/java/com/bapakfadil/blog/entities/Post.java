@@ -1,9 +1,17 @@
 package com.bapakfadil.blog.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
+@Entity
 public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
     private String body;
@@ -13,9 +21,4 @@ public class Post {
     private Integer createdAt;
     private Integer publishedAt;  
 
-    public Post(Integer id, String title, String slug) {
-        this.id = id;
-        this.title = title;
-        this.slug = slug;
-    }
 }
