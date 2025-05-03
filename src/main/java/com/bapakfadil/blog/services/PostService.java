@@ -38,7 +38,7 @@ public class PostService {
         if (savedPost == null) {
             return null;
         }
-
+        post.setUpdatedAt(Instant.now().getEpochSecond());
         post.setId(savedPost.getId());
         return postRepository.save(post);
     }
@@ -49,6 +49,7 @@ public class PostService {
         if (post == null) {
             return false;
         }
+        post.setUpdatedAt(Instant.now().getEpochSecond());
         post.setDeleted(true);
         postRepository.save(post);
         return true;

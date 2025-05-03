@@ -22,6 +22,9 @@ public class Post {
 
     private boolean isPublished;
     private boolean isDeleted;
+    private long updatedAt;
+
+    @Column(updatable = false)
     private long createdAt;
     private long publishedAt;
 
