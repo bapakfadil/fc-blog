@@ -13,6 +13,6 @@ public class CreatePostResponse {
     private String title;
     private String slug;
     private String body;
-    private long publishedAt;
+    private long createdAt;
     private long commentCount;
 }
