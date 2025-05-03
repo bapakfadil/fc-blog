@@ -23,6 +23,6 @@ public class Post {
     private boolean isPublished;
     private boolean isDeleted;
     private long createdAt;
-    private long publishedAt;  
+    private long publishedAt;
 
 }
