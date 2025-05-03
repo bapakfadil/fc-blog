@@ -7,6 +7,7 @@ import com.bapakfadil.blog.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 
@@ -31,6 +32,7 @@ public class CommentService {
         return commentRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     public Comment createComment(Comment comment) {
         Post post = postRepository.findFirstBySlugAndIsDeleted(comment.getPost().getSlug(), false).orElse(null);
         if (post == null) {
@@ -38,6 +40,11 @@ public class CommentService {
         }
         comment.setCreatedAt(Instant.now().getEpochSecond());
         comment.getPost().setId(post.getId());
-        return commentRepository.save(comment);
+        comment = commentRepository.save(comment);
+
+        post.setCommentCount(post.getCommentCount() + 1);
+        postRepository.save(post);
+
+        return comment;
     }
 }
