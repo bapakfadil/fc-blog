@@ -1,5 +1,8 @@
 package com.bapakfadil.blog.controllers;
 
+import com.bapakfadil.blog.requests.CreatePostRequest;
+import com.bapakfadil.blog.responses.CreatePostResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import com.bapakfadil.blog.entities.Post;
@@ -25,8 +28,8 @@ public class PostController {
     }
     
     @PostMapping("/")
-    public Post createPost(@RequestBody Post post) {
-        return postService.createPost(post);
+    public CreatePostResponse createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
+        return postService.createPost(createPostRequest);
     }
 
     @PutMapping("/{slug}")

@@ -2,6 +2,8 @@ package com.bapakfadil.blog.services;
 
 import java.time.Instant;
 
+import com.bapakfadil.blog.requests.CreatePostRequest;
+import com.bapakfadil.blog.responses.CreatePostResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +29,22 @@ public class PostService {
         return postRepository.findFirstBySlugAndIsDeleted(slug, false).orElse(null);
     }
 
-    public Post createPost(Post post) {
+    public CreatePostResponse createPost(CreatePostRequest request) {
+        Post post = new Post();
+        post.setBody(request.getBody());
+        post.setTitle(request.getTitle());
+        post.setSlug(request.getSlug());
+        // Untuk set value dari comment 0
+        //post.setCommentCount(0L);
         post.setCreatedAt(Instant.now().getEpochSecond());
-        return postRepository.save(post);
+
+        post = postRepository.save(post);
+        return new CreatePostResponse(
+                post.getTitle(),
+                post.getSlug(),
+                post.getBody(),
+                post.getCreatedAt(),
+                post.getCommentCount());
     }
 
     public Post updatePostBySlug(String slug, Post post) {
