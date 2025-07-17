@@ -4,7 +4,9 @@ import java.time.Instant;
 
 import com.bapakfadil.blog.mapper.PostMapper;
 import com.bapakfadil.blog.requests.CreatePostRequest;
+import com.bapakfadil.blog.requests.GetPostBySlugRequest;
 import com.bapakfadil.blog.responses.CreatePostResponse;
+import com.bapakfadil.blog.responses.GetPostResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,16 +28,25 @@ public class PostService {
         return postRepository.findAll();    
     }
 
-    public Post getPostsBySlug(String slug) {
-        return postRepository.findFirstBySlugAndIsDeleted(slug, false).orElse(null);
+    public GetPostResponse getPostsBySlug(GetPostBySlugRequest request) {
+        Post post = postRepository.findFirstBySlugAndIsDeleted(request.getSlug(), false).orElse(null);
+        if (post == null) {
+            return null;
+        }
+        return PostMapper.INSTANCE.mapToGetPostResponse(post);
     }
 
     public CreatePostResponse createPost(CreatePostRequest request) {
-        Post post = PostMapper.INSTANCE.map(request);
+        Post post = PostMapper.INSTANCE.mapToCreatePostResponse(request);
+
+        // untuk set value createdAt setiap kali user membuat Post
         post.setCreatedAt(Instant.now().getEpochSecond());
+
+        // untuk menghandle error comment_count can't be null sebelum implementasi POSTMAPPER
         //post.setCommentCount(0L);
+
         post = postRepository.save(post);
-        return PostMapper.INSTANCE.map(post);
+        return PostMapper.INSTANCE.mapToCreatePostResponse(post);
     }
 
     public Post updatePostBySlug(String slug, Post post) {

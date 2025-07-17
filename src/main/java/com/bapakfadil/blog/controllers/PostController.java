@@ -1,7 +1,9 @@
 package com.bapakfadil.blog.controllers;
 
 import com.bapakfadil.blog.requests.CreatePostRequest;
+import com.bapakfadil.blog.requests.GetPostBySlugRequest;
 import com.bapakfadil.blog.responses.CreatePostResponse;
+import com.bapakfadil.blog.responses.GetPostResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +25,11 @@ public class PostController {
     }
 
     @GetMapping("/{slug}")
-    public Post getPostBySlug(@PathVariable String slug) {
-        return postService.getPostsBySlug(slug);
+    public GetPostResponse getPostBySlug(@Valid@PathVariable String slug) {
+        GetPostBySlugRequest request = GetPostBySlugRequest.builder().slug(slug).build();
+        return postService.getPostsBySlug(request);
     }
-    
+
     @PostMapping("/")
     public CreatePostResponse createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
         return postService.createPost(createPostRequest);
