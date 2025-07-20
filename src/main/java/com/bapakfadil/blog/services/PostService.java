@@ -2,12 +2,14 @@ package com.bapakfadil.blog.services;
 
 import java.time.Instant;
 
+import com.bapakfadil.blog.exceptions.ApiException;
 import com.bapakfadil.blog.mapper.PostMapper;
 import com.bapakfadil.blog.requests.CreatePostRequest;
 import com.bapakfadil.blog.requests.GetPostBySlugRequest;
 import com.bapakfadil.blog.responses.CreatePostResponse;
 import com.bapakfadil.blog.responses.GetPostResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.bapakfadil.blog.entities.Post;
@@ -29,10 +31,8 @@ public class PostService {
     }
 
     public GetPostResponse getPostsBySlug(GetPostBySlugRequest request) {
-        Post post = postRepository.findFirstBySlugAndIsDeleted(request.getSlug(), false).orElse(null);
-        if (post == null) {
-            return null;
-        }
+        Post post = postRepository.findFirstBySlugAndIsDeleted(request.getSlug(), false)
+                .orElseThrow(() -> new ApiException("Post not found", HttpStatus.NOT_FOUND));
         return PostMapper.INSTANCE.mapToGetPostResponse(post);
     }
 
