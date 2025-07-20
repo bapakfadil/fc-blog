@@ -1,8 +1,8 @@
 package com.bapakfadil.blog.mapper;
 
 import com.bapakfadil.blog.entities.Comment;
-import com.bapakfadil.blog.requests.CreateCommentRequest;
-import com.bapakfadil.blog.responses.CreateCommentResponse;
+import com.bapakfadil.blog.requests.comment.CreateCommentRequest;
+import com.bapakfadil.blog.responses.comment.CreateCommentResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

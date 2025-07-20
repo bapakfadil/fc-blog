@@ -1,9 +1,9 @@
 package com.bapakfadil.blog.mapper;
 
 import com.bapakfadil.blog.entities.Post;
-import com.bapakfadil.blog.requests.CreatePostRequest;
-import com.bapakfadil.blog.responses.CreatePostResponse;
-import com.bapakfadil.blog.responses.GetPostResponse;
+import com.bapakfadil.blog.requests.post.CreatePostRequest;
+import com.bapakfadil.blog.responses.post.CreatePostResponse;
+import com.bapakfadil.blog.responses.post.GetPostResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

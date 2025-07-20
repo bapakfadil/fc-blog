@@ -1,4 +1,4 @@
-package com.bapakfadil.blog.requests;
+package com.bapakfadil.blog.requests.post;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

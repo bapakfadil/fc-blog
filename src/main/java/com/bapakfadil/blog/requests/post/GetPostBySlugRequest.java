@@ -1,4 +1,4 @@
-package com.bapakfadil.blog.requests;
+package com.bapakfadil.blog.requests.post;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

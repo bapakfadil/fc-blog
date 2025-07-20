@@ -1,9 +1,9 @@
 package com.bapakfadil.blog.controllers;
 
-import com.bapakfadil.blog.requests.CreatePostRequest;
-import com.bapakfadil.blog.requests.GetPostBySlugRequest;
-import com.bapakfadil.blog.responses.CreatePostResponse;
-import com.bapakfadil.blog.responses.GetPostResponse;
+import com.bapakfadil.blog.requests.post.CreatePostRequest;
+import com.bapakfadil.blog.requests.post.GetPostBySlugRequest;
+import com.bapakfadil.blog.responses.post.CreatePostResponse;
+import com.bapakfadil.blog.responses.post.GetPostResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.bapakfadil.blog.requests;
+package com.bapakfadil.blog.requests.comment;
 
 import com.bapakfadil.blog.entities.Post;
 import jakarta.validation.Valid;

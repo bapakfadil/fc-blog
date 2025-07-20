@@ -1,4 +1,4 @@
-package com.bapakfadil.blog.responses;
+package com.bapakfadil.blog.responses.comment;
 
 import com.bapakfadil.blog.entities.Post;
 import lombok.AllArgsConstructor;
