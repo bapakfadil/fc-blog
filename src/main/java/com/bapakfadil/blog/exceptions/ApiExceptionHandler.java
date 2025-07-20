@@ -1,6 +1,8 @@
 package com.bapakfadil.blog.exceptions;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -18,5 +20,15 @@ public class ApiExceptionHandler {
 
         ApiExceptionResponse response = ApiExceptionResponse.builder().ErrorMessages(errorMessages).build();
         return ResponseEntity.status(exception.getHttpStatus()).body(response);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiExceptionResponse> handler(MethodArgumentNotValidException exception) {
+
+        List<String> errorMessages = new ArrayList<>();
+        exception.getFieldErrors().forEach(fieldError -> errorMessages.add(fieldError.getDefaultMessage()));
+
+        ApiExceptionResponse response = ApiExceptionResponse.builder().ErrorMessages(errorMessages).build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }

@@ -1,7 +1,10 @@
 package com.bapakfadil.blog.controllers;
 
 import com.bapakfadil.blog.entities.Comment;
+import com.bapakfadil.blog.requests.CreateCommentRequest;
+import com.bapakfadil.blog.responses.CreateCommentResponse;
 import com.bapakfadil.blog.services.CommentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +29,7 @@ public class CommentController {
     }
 
     @PostMapping("/")
-    public Comment createComment(@RequestBody Comment comment) {
+    public CreateCommentResponse createComment(@Valid @RequestBody CreateCommentRequest comment) {
         return commentService.createComment(comment);
     }
 }

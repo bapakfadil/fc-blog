@@ -2,8 +2,11 @@ package com.bapakfadil.blog.services;
 
 import com.bapakfadil.blog.entities.Comment;
 import com.bapakfadil.blog.entities.Post;
+import com.bapakfadil.blog.mapper.CommentMapper;
 import com.bapakfadil.blog.repositories.CommentRepository;
 import com.bapakfadil.blog.repositories.PostRepository;
+import com.bapakfadil.blog.requests.CreateCommentRequest;
+import com.bapakfadil.blog.responses.CreateCommentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -33,18 +36,20 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment createComment(Comment comment) {
-        Post post = postRepository.findFirstBySlugAndIsDeleted(comment.getPost().getSlug(), false).orElse(null);
+    public CreateCommentResponse createComment(CreateCommentRequest request) {
+        Post post = postRepository.findFirstBySlugAndIsDeleted(request.getPost().getSlug(), false).orElse(null);
         if (post == null) {
             return null;
         }
+        Comment comment = CommentMapper.INSTANCE.mapFromCreateCommentRequest(request);
+
         comment.setCreatedAt(Instant.now().getEpochSecond());
         comment.getPost().setId(post.getId());
-        comment = commentRepository.save(comment);
+        commentRepository.save(comment);
 
         post.setCommentCount(post.getCommentCount() + 1);
         postRepository.save(post);
 
-        return comment;
+        return CommentMapper.INSTANCE.mapToCreateCommentResponse(comment);
     }
 }
