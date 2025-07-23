@@ -2,6 +2,7 @@ package com.bapakfadil.blog.controllers;
 
 import com.bapakfadil.blog.requests.post.CreatePostRequest;
 import com.bapakfadil.blog.requests.post.GetPostBySlugRequest;
+import com.bapakfadil.blog.requests.post.GetPostsRequest;
 import com.bapakfadil.blog.responses.post.CreatePostResponse;
 import com.bapakfadil.blog.responses.post.GetPostResponse;
 import jakarta.validation.Valid;
@@ -12,6 +13,8 @@ import com.bapakfadil.blog.services.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
@@ -19,32 +22,43 @@ public class PostController {
     @Autowired
     PostService postService;
 
+    // Get All Posts
     @GetMapping("/")
-    public Iterable<Post> getPost() {
-        return postService.getPosts();
+    public List<GetPostResponse> getPosts(@RequestParam(required = false, defaultValue = "0") Integer pageNo,
+                                          @RequestParam(required = false, defaultValue = "10") Integer limit) {
+        GetPostsRequest getPostsRequest = GetPostsRequest.builder()
+                .pageNo(pageNo)
+                .limit(limit)
+                .build();
+        return postService.getPosts(getPostsRequest);
     }
 
+    // Get Post (by Slug)
     @GetMapping("/{slug}")
     public GetPostResponse getPostBySlug(@Valid@PathVariable String slug) {
         GetPostBySlugRequest request = GetPostBySlugRequest.builder().slug(slug).build();
         return postService.getPostsBySlug(request);
     }
 
+    // Create Post
     @PostMapping("/")
     public CreatePostResponse createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
         return postService.createPost(createPostRequest);
     }
 
+    // Update Post (by Slug)
     @PutMapping("/{slug}")
     public Post updatePostBySlug(@PathVariable String slug, @RequestBody Post sentPostByUser) {
         return postService.updatePostBySlug(slug, sentPostByUser);
     }
 
+    // Delete Post (by ID)
     @DeleteMapping("/{id}")
     public Boolean deletePostById(@PathVariable Integer id) {
         return postService.deletePostById(id); 
     }
 
+    // Publish Post (by ID)
     @PostMapping("/{id}/publish")
     public Post publishPost(@PathVariable Integer id) {
         return postService.publishPost(id);
