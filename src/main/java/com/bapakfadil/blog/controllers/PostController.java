@@ -3,8 +3,8 @@ package com.bapakfadil.blog.controllers;
 import com.bapakfadil.blog.requests.post.CreatePostRequest;
 import com.bapakfadil.blog.requests.post.GetPostBySlugRequest;
 import com.bapakfadil.blog.requests.post.GetPostsRequest;
-import com.bapakfadil.blog.responses.post.CreatePostResponse;
-import com.bapakfadil.blog.responses.post.GetPostResponse;
+import com.bapakfadil.blog.requests.post.UpdatePostBySlugRequest;
+import com.bapakfadil.blog.responses.post.*;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,19 +48,19 @@ public class PostController {
 
     // Update Post (by Slug)
     @PutMapping("/{slug}")
-    public Post updatePostBySlug(@PathVariable String slug, @RequestBody Post sentPostByUser) {
-        return postService.updatePostBySlug(slug, sentPostByUser);
+    public UpdatePostBySlugResponse updatePostBySlug(@PathVariable String slug, @Valid @RequestBody UpdatePostBySlugRequest updatePostBySlugRequest) {
+        return postService.updatePostBySlug(slug, updatePostBySlugRequest);
     }
 
     // Delete Post (by ID)
     @DeleteMapping("/{id}")
-    public Boolean deletePostById(@PathVariable Integer id) {
-        return postService.deletePostById(id); 
+    public DeletePostByIdResponse deletePostById(@PathVariable Integer id) {
+        return postService.deletePostById(id);
     }
 
     // Publish Post (by ID)
     @PostMapping("/{id}/publish")
-    public Post publishPost(@PathVariable Integer id) {
+    public PublishPostResponse publishPost(@PathVariable Integer id) {
         return postService.publishPost(id);
     }
 }

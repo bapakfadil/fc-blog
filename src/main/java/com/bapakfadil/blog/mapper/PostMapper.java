@@ -4,6 +4,7 @@ import com.bapakfadil.blog.entities.Post;
 import com.bapakfadil.blog.requests.post.CreatePostRequest;
 import com.bapakfadil.blog.responses.post.CreatePostResponse;
 import com.bapakfadil.blog.responses.post.GetPostResponse;
+import com.bapakfadil.blog.responses.post.UpdatePostBySlugResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -19,4 +20,7 @@ public interface PostMapper {
 
     // Mapper for Get Post
     GetPostResponse mapToGetPostResponse (Post post);
+
+    // Mapper for Updating Post
+    UpdatePostBySlugResponse mapToUpdatePostBySlugResponse(Post post);
 }
