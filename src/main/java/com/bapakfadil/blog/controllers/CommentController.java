@@ -24,8 +24,8 @@ public class CommentController {
     @GetMapping("/")
     public List<GetCommentResponse> getComments(
             @RequestParam(required = false) String postSlug,
-            @RequestParam(required = false) Integer pageNo,
-            @RequestParam(required = false) Integer limit) {
+            @RequestParam(required = false, defaultValue = "0") Integer pageNo,
+            @RequestParam(required = false, defaultValue = "10") Integer limit) {
         GetCommentsRequest request = GetCommentsRequest.builder()
                 .postSlug(postSlug)
                 .pageNo(pageNo)
