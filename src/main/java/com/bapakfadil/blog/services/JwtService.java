@@ -1,6 +1,7 @@
 package com.bapakfadil.blog.services;
 
 import com.bapakfadil.blog.properties.SecretProperties;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class JwtService {
                 .claims(claims)
                 .subject(userDetails.getUsername())
                 .issuedAt(Date.from(now))
-                .expiration(Date.from(now.plusSeconds(10))) // Set expired di 10 detik
+                .expiration(Date.from(now.plusSeconds(10*60))) // Set expired di 10 detik
                 .signWith(generateKey())
                 .compact();
     }
@@ -38,5 +39,30 @@ public class JwtService {
         // decode key harus rutin diganti
         byte[] decodeKey = Base64.getDecoder().decode(secretProperties.getJwtSecret());
         return Keys.hmacShaKeyFor(decodeKey);
+    }
+
+    // untuk extract username
+    public String extractUsername(String jwt) {
+        Claims claims = getClaims(jwt);
+
+        if (claims == null) {
+            return null;
+        }
+
+        return claims.getSubject();
+    }
+
+    private Claims getClaims(String jwt) {
+        return Jwts.parser()
+                .verifyWith(generateKey())
+                .build()
+                .parseSignedClaims(jwt)
+                .getPayload();
+    }
+
+    // untuk cek expiry token
+    public boolean isExpired(String jwt) {
+        Claims claims = getClaims(jwt);
+        return claims.getExpiration().before(Date.from(Instant.now()));
     }
 }
