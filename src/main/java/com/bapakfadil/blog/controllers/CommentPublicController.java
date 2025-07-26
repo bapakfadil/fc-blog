@@ -1,6 +1,5 @@
 package com.bapakfadil.blog.controllers;
 
-import com.bapakfadil.blog.entities.Comment;
 import com.bapakfadil.blog.requests.comment.CreateCommentRequest;
 import com.bapakfadil.blog.requests.comment.GetCommentByIdRequest;
 import com.bapakfadil.blog.requests.comment.GetCommentsRequest;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comments")
-public class CommentController {
+@RequestMapping("/api/public/comments")
+public class CommentPublicController {
 
     @Autowired
     CommentService commentService;
@@ -23,7 +22,7 @@ public class CommentController {
     // Get All Comments
     @GetMapping("/")
     public List<GetCommentResponse> getComments(
-            @RequestParam(required = false) String postSlug,
+            @RequestParam String postSlug,
             @RequestParam(required = false, defaultValue = "0") Integer pageNo,
             @RequestParam(required = false, defaultValue = "10") Integer limit) {
         GetCommentsRequest request = GetCommentsRequest.builder()
@@ -34,15 +33,8 @@ public class CommentController {
         return commentService.getComments(request);
     }
 
-    // Get Comment by ID
-    @GetMapping("/{id}")
-    public GetCommentResponse getCommentById(@PathVariable Integer id) {
-        GetCommentByIdRequest request = GetCommentByIdRequest.builder().id(id).build();
-        return commentService.getCommentById(request);
-    }
-
     // Create Comment
-    @PostMapping("/")
+    @PostMapping
     public CreateCommentResponse createComment(@Valid @RequestBody CreateCommentRequest commentRequest) {
         return commentService.createComment(commentRequest);
     }
