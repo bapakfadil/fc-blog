@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/posts")
 public class PostController {
 
     @Autowired
     PostService postService;
 
-    @GetMapping("/")
+    @GetMapping
     public Iterable<Post> getPosts() {
         return postService.getPosts();
     }
@@ -23,7 +24,7 @@ public class PostController {
         return postService.getPost(slug);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Post createPost(@RequestBody Post post) {
         return postService.createPost(post);
     }
