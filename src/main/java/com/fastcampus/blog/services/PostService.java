@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -17,13 +18,13 @@ public class PostService {
     PostRepository postRepository;
 
     // Get all posts
-    public Iterable<Post> getPosts() {
-        return postRepository.findAll();
+    public List<Post> getPosts() {
+        return postRepository.findAllByIsDeleted(false);
     }
 
     // Get post by Slug
     public Post getPost(String slug) {
-        return postRepository.findPostBySlug(slug).orElse(null);
+        return postRepository.findPostBySlugAndIsDeleted(slug, false).orElse(null);
     }
 
     // Create new post
@@ -34,7 +35,7 @@ public class PostService {
 
     // Update post
     public Post updatePost(String slug, Post updatedPost) {
-        Post targetPost = postRepository.findPostBySlug(slug).orElse(null);
+        Post targetPost = postRepository.findPostBySlugAndIsDeleted(slug, false).orElse(null);
         if (targetPost == null) {
             return null;
         }
@@ -47,18 +48,19 @@ public class PostService {
 
     // Delete post
     public boolean deletePost(Integer id) {
-        Post targetPost = postRepository.findPostById(id);
+        Post targetPost = postRepository.findPostByIdAndIsDeleted(id, false).orElse(null);
         if (targetPost == null) {
             return false;
         }
+        targetPost.setDeleted(true);
         targetPost.setDeletedAt(Instant.now());
-        postRepository.deleteById(id);
+        postRepository.save(targetPost);
         return true;
     }
 
     // Publish post
     public Post publishPost(Integer id) {
-        Post targetPost = postRepository.findPostById(id);;
+        Post targetPost = postRepository.findPostByIdAndIsDeleted(id, false).orElse(null);;
         if (targetPost == null) {
             return null;
         }
