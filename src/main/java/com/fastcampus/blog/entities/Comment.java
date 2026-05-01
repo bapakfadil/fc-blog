@@ -6,16 +6,17 @@ import lombok.Data;
 import java.time.Instant;
 
 @Data
+@Entity
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String email;
-    private Integer postId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
     private String body;
-    private boolean isDeleted;
     private Instant createdAt;
-    private Instant deletedAt;
-    private Instant updatedAt;
 }

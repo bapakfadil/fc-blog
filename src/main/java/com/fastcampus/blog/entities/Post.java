@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @Entity
@@ -22,4 +23,10 @@ public class Post {
     private Instant publishedAt;
     private Instant deletedAt;
     private Instant updatedAt;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "post",
+            orphanRemoval = true)
+    private List<Comment> comments;
 }

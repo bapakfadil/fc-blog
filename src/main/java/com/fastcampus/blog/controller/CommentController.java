@@ -5,8 +5,6 @@ import com.fastcampus.blog.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
@@ -15,7 +13,7 @@ public class CommentController {
     CommentService commentService;
 
     @GetMapping
-    public List<Comment> getComments(
+    public Iterable<Comment> getComments(
             @RequestParam(required = false) String postSlug,
             @RequestParam(required = false) Integer pageNo,
             @RequestParam(required = false) Integer limit) {

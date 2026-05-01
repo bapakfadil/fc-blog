@@ -1,27 +1,26 @@
 package com.fastcampus.blog.services;
 
 import com.fastcampus.blog.entities.Comment;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.fastcampus.blog.repositories.CommentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CommentService {
 
-    public List<Comment> getComments(String postSlug, Integer pageNo, Integer limit) {
-        List<Comment> commentsList = new ArrayList<>();
-        return commentsList;
+    @Autowired
+    CommentRepository commentRepository;
+
+    public Iterable<Comment> getComments(String postSlug, Integer pageNo, Integer limit) {
+        return commentRepository.findAll();
     }
 
     public Comment getComment(Integer id) {
-        return new Comment();
+        return commentRepository.findById(id).orElse(null);
     }
 
     public Comment createComment(Comment comment) {
-        return comment;
+        return commentRepository.save(comment);
     }
 
 }
