@@ -1,14 +1,20 @@
 package com.fastcampus.blog.entities;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
 
 @Data
+@Entity
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
     private String body;
+
+    @Column(unique = true)
     private String slug;
     private boolean isPublished;
     private boolean isDeleted;
@@ -16,11 +22,4 @@ public class Post {
     private Instant publishedAt;
     private Instant deletedAt;
     private Instant updatedAt;
-
-    public Post(Integer id, String title, String body, String slug) {
-        this.id = id;
-        this.title = title;
-        this.body = body;
-        this.slug = slug;
-    }
 }
