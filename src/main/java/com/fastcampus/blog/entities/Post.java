@@ -31,5 +31,5 @@ public class Post {
             orphanRemoval = true)
     @JsonIgnore
     private List<Comment> comments;
-    private Long commentCount;
+    private Integer commentCount;
 }

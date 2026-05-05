@@ -30,6 +30,7 @@ public class PostService {
     // Create new post
     public Post createPost(Post post) {
         post.setCreatedAt(Instant.now());
+        post.setCommentCount(0);
         return postRepository.save(post);
     }
 

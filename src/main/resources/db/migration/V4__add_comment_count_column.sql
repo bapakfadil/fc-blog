@@ -1,1 +1,1 @@
-ALTER TABLE post ADD COLUMN comment_count INT NOT NULL;
+ALTER TABLE post ADD COLUMN comment_count INT DEFAULT 0 NOT NULL;
