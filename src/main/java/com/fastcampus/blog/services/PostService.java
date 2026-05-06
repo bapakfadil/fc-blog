@@ -2,6 +2,8 @@ package com.fastcampus.blog.services;
 
 import com.fastcampus.blog.entities.Post;
 import com.fastcampus.blog.repositories.PostRepository;
+import com.fastcampus.blog.requests.CreatePostRequest;
+import com.fastcampus.blog.responses.CreatePostResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +30,25 @@ public class PostService {
     }
 
     // Create new post
-    public Post createPost(Post post) {
+    public CreatePostResponse createPost(CreatePostRequest request) {
+        Post post = new Post();
+        post.setTitle(request.getTitle());
+        post.setSlug(request.getSlug());
+        post.setBody(request.getBody());
         post.setCreatedAt(Instant.now());
         post.setCommentCount(0);
-        return postRepository.save(post);
+        post = postRepository.save(post);
+
+        return CreatePostResponse.builder()
+                .title(post.getTitle())
+                .slug(post.getSlug())
+                .body(post.getBody())
+                .createdAt(post.getCreatedAt())
+                .commentCount(post.getCommentCount())
+                .build();
     }
+
+    // TODO : Lanjutkan 1-8-2 menit ke 6
 
     // Update post
     public Post updatePost(String slug, Post updatedPost) {
