@@ -48,8 +48,6 @@ public class PostService {
                 .build();
     }
 
-    // TODO : Lanjutkan 1-8-2 menit ke 6
-
     // Update post
     public Post updatePost(String slug, Post updatedPost) {
         Post targetPost = postRepository.findPostBySlugAndIsDeleted(slug, false).orElse(null);
