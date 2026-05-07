@@ -9,8 +9,9 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface PostMapper {
     PostMapper INSTANCE = Mappers.getMapper(PostMapper.class);
-    Post createPostRequestMap(CreatePostRequest createPost);
 
+    // Create Post
+    Post createPostRequestMap(CreatePostRequest createPost);
     // @Mapping(source = "slug", target = "path") // jika terdapat perbedaan nama field maka ini adalah solusinya
     CreatePostResponse createPostResponseMap(Post post);
 }
