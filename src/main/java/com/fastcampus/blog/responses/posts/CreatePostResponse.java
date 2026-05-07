@@ -1,4 +1,4 @@
-package com.fastcampus.blog.responses;
+package com.fastcampus.blog.responses.posts;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

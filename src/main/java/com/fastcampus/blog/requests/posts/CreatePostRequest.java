@@ -1,4 +1,4 @@
-package com.fastcampus.blog.requests;
+package com.fastcampus.blog.requests.posts;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

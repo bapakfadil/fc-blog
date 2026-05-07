@@ -1,8 +1,9 @@
 package com.fastcampus.blog.mapper;
 
 import com.fastcampus.blog.entities.Post;
-import com.fastcampus.blog.requests.CreatePostRequest;
-import com.fastcampus.blog.responses.CreatePostResponse;
+import com.fastcampus.blog.requests.posts.CreatePostRequest;
+import com.fastcampus.blog.responses.posts.CreatePostResponse;
+import com.fastcampus.blog.responses.posts.GetPostBySlugResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -12,6 +13,9 @@ public interface PostMapper {
 
     // Create Post
     Post createPostRequestMap(CreatePostRequest createPost);
-    // @Mapping(source = "slug", target = "path") // jika terdapat perbedaan nama field maka ini adalah solusinya
+    // @Mapping(source = "slug", target = "path") // jika terdapat perbedaan nama field, maka ini adalah solusinya
     CreatePostResponse createPostResponseMap(Post post);
+
+    // Get Post by Slug
+    GetPostBySlugResponse getPostBySlugResponseMap(Post post);
 }

@@ -3,8 +3,9 @@ package com.fastcampus.blog.services;
 import com.fastcampus.blog.entities.Post;
 import com.fastcampus.blog.mapper.PostMapper;
 import com.fastcampus.blog.repositories.PostRepository;
-import com.fastcampus.blog.requests.CreatePostRequest;
-import com.fastcampus.blog.responses.CreatePostResponse;
+import com.fastcampus.blog.requests.posts.CreatePostRequest;
+import com.fastcampus.blog.responses.posts.CreatePostResponse;
+import com.fastcampus.blog.responses.posts.GetPostBySlugResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,12 @@ public class PostService {
     }
 
     // Get post by Slug
-    public Post getPost(String slug) {
-        return postRepository.findPostBySlugAndIsDeleted(slug, false).orElse(null);
+    public GetPostBySlugResponse getPostBySlugResponse(String slug) {
+        Post post = postRepository.findPostBySlugAndIsDeleted(slug, false).orElse(null);
+        if (post == null) {
+            return null;
+        }
+        return PostMapper.INSTANCE.getPostBySlugResponseMap(post);
     }
 
     // Create new post

@@ -1,14 +1,15 @@
 package com.fastcampus.blog.controller;
 
 import com.fastcampus.blog.entities.Post;
-import com.fastcampus.blog.requests.CreatePostRequest;
-import com.fastcampus.blog.responses.CreatePostResponse;
+import com.fastcampus.blog.requests.posts.CreatePostRequest;
+import com.fastcampus.blog.responses.posts.CreatePostResponse;
+import com.fastcampus.blog.responses.posts.GetPostBySlugResponse;
 import com.fastcampus.blog.services.PostService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -23,8 +24,11 @@ public class PostController {
     }
 
     @GetMapping("/{slug}")
-    public Post getPost(@PathVariable String slug) {
-        return postService.getPost(slug);
+    public GetPostBySlugResponse getPostBySlugResponse(
+            @PathVariable
+            @Size(min = 2, message = "Minimal 2 character.")
+            String slug) {
+        return postService.getPostBySlugResponse(slug);
     }
 
     @PostMapping
