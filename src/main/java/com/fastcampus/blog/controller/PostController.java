@@ -2,8 +2,10 @@ package com.fastcampus.blog.controller;
 
 import com.fastcampus.blog.entities.Post;
 import com.fastcampus.blog.requests.posts.CreatePostRequest;
+import com.fastcampus.blog.requests.posts.UpdatePostRequest;
 import com.fastcampus.blog.responses.posts.CreatePostResponse;
 import com.fastcampus.blog.responses.posts.GetPostBySlugResponse;
+import com.fastcampus.blog.responses.posts.UpdatePostResponse;
 import com.fastcampus.blog.services.PostService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -37,8 +39,8 @@ public class PostController {
     }
 
     @PutMapping("/{slug}")
-    public Post updatePostBySlug(@PathVariable String slug, @RequestBody Post updatedPost) {
-        return postService.updatePost(slug, updatedPost);
+    public UpdatePostResponse updatePostBySlug(@PathVariable String slug, @Valid @RequestBody UpdatePostRequest updatePost) {
+        return postService.updatePost(slug, updatePost);
     }
 
     @DeleteMapping("/{id}")
