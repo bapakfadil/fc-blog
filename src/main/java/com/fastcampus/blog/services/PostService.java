@@ -64,10 +64,9 @@ public class PostService {
 
     // Delete post
     public boolean deletePost(Integer id) {
-        Post targetPost = postRepository.findPostByIdAndIsDeleted(id, false).orElse(null);
-        if (targetPost == null) {
-            return false;
-        }
+        Post targetPost = postRepository
+                .findPostByIdAndIsDeleted(id, false)
+                .orElseThrow(() -> new ApiException("Post not found", HttpStatus.NOT_FOUND));
         targetPost.setDeleted(true);
         targetPost.setDeletedAt(Instant.now());
         postRepository.save(targetPost);
@@ -76,10 +75,9 @@ public class PostService {
 
     // Publish post
     public PublishPostResponse publishPostResponse(Integer id) {
-        Post targetPost = postRepository.findPostByIdAndIsDeleted(id, false).orElse(null);
-        if (targetPost == null) {
-            return null;
-        }
+        Post targetPost = postRepository
+                .findPostByIdAndIsDeleted(id, false)
+                .orElseThrow(() -> new ApiException("Post not found", HttpStatus.NOT_FOUND));
         targetPost.setPublishedAt(Instant.now());
         targetPost.setPublished(true);
         postRepository.save(targetPost);
