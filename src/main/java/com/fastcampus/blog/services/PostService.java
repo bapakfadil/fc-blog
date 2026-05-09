@@ -7,6 +7,7 @@ import com.fastcampus.blog.requests.posts.CreatePostRequest;
 import com.fastcampus.blog.requests.posts.UpdatePostRequest;
 import com.fastcampus.blog.responses.posts.CreatePostResponse;
 import com.fastcampus.blog.responses.posts.GetPostBySlugResponse;
+import com.fastcampus.blog.responses.posts.PublishPostResponse;
 import com.fastcampus.blog.responses.posts.UpdatePostResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -77,14 +78,15 @@ public class PostService {
     }
 
     // Publish post
-    public Post publishPost(Integer id) {
-        Post targetPost = postRepository.findPostByIdAndIsDeleted(id, false).orElse(null);;
+    public PublishPostResponse publishPostResponse(Integer id) {
+        Post targetPost = postRepository.findPostByIdAndIsDeleted(id, false).orElse(null);
         if (targetPost == null) {
             return null;
         }
         targetPost.setPublishedAt(Instant.now());
         targetPost.setPublished(true);
-        return postRepository.save(targetPost);
+        postRepository.save(targetPost);
+        return PostMapper.INSTANCE.mapToPublishPost(targetPost);
     }
 }
 

@@ -5,6 +5,7 @@ import com.fastcampus.blog.requests.posts.CreatePostRequest;
 import com.fastcampus.blog.requests.posts.UpdatePostRequest;
 import com.fastcampus.blog.responses.posts.CreatePostResponse;
 import com.fastcampus.blog.responses.posts.GetPostBySlugResponse;
+import com.fastcampus.blog.responses.posts.PublishPostResponse;
 import com.fastcampus.blog.responses.posts.UpdatePostResponse;
 import com.fastcampus.blog.services.PostService;
 import jakarta.validation.Valid;
@@ -49,7 +50,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}/publish")
-    public Post publishPost(@PathVariable Integer id) {
-        return postService.publishPost(id);
+    public PublishPostResponse publishPostResponse(@PathVariable Integer id) {
+        return postService.publishPostResponse(id);
     }
 }
