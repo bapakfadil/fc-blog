@@ -84,5 +84,3 @@ public class PostService {
         return PostMapper.INSTANCE.mapToPublishPost(targetPost);
     }
 }
-
-// TODO : Implementasi throw error ke API response di semua API requests Post
