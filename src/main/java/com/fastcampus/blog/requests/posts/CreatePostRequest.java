@@ -24,5 +24,3 @@ public class CreatePostRequest {
     @NotNull
     private String slug;
 }
-
-// TODO : implementasikan DTO, Validation dan Mapping pada Post
