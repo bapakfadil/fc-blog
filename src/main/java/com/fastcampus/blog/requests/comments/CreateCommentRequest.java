@@ -17,11 +17,10 @@ public class CreateCommentRequest {
     @Size(min = 2, max = 100, message = "Name min 2 and max 100 character")
     @NotNull
     private String name;
-    @Size(min = 2, max = 100, message = "Name min 2 and max 100 character")
     @NotNull
-    @Email
+    @Email(message = "Must be a well-formed email address")
     private String email;
-    @Size(min = 2, max = 1000, message = "Name min 2 and max 1000 character")
+    @Size(min = 2, max = 1000, message = "Comment min 2 and max 1000 character")
     @NotNull
     private String body;
     @NotNull
