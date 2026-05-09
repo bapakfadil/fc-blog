@@ -9,7 +9,6 @@ import com.fastcampus.blog.responses.posts.PublishPostResponse;
 import com.fastcampus.blog.responses.posts.UpdatePostResponse;
 import com.fastcampus.blog.services.PostService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +30,7 @@ public class PostController {
             @PathVariable
             @Size(min = 2, message = "Minimal 2 character.")
             String slug) {
-        return postService.getPostBySlugResponse(slug);
+        return postService.getPostBySlug(slug);
     }
 
     @PostMapping
