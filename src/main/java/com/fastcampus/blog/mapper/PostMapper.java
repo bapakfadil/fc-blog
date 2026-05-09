@@ -15,15 +15,15 @@ public interface PostMapper {
     PostMapper INSTANCE = Mappers.getMapper(PostMapper.class);
 
     // Create Post
-    Post createPostRequestMap(CreatePostRequest createPost);
+    Post mapToCreatePostRequest(CreatePostRequest createPost);
     // @Mapping(source = "slug", target = "path") // jika terdapat perbedaan nama field, maka ini adalah solusinya
-    CreatePostResponse createPostResponseMap(Post post);
+    CreatePostResponse mapToCreatePostResponse(Post post);
 
     // Get Post by Slug
-    GetPostBySlugResponse getPostBySlugResponseMap(Post post);
+    GetPostBySlugResponse mapToGetPostBySlugResponse(Post post);
 
     // Update Post
-    void updatePostRequestMap(UpdatePostRequest updatedPost, @MappingTarget Post post);
-    UpdatePostResponse updatePostResponseMap(Post post);
+    void mapToUpdatePostRequest(UpdatePostRequest updatedPost, @MappingTarget Post post);
+    UpdatePostResponse mapToUpdatePostResponse(Post post);
 
 }

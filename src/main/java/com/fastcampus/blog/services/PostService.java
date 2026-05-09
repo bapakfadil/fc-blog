@@ -35,17 +35,17 @@ public class PostService {
         if (post == null) {
             return null;
         }
-        return PostMapper.INSTANCE.getPostBySlugResponseMap(post);
+        return PostMapper.INSTANCE.mapToGetPostBySlugResponse(post);
     }
 
     // Create new post
     public CreatePostResponse createPost(CreatePostRequest request) {
-        Post post = PostMapper.INSTANCE.createPostRequestMap(request);
+        Post post = PostMapper.INSTANCE.mapToCreatePostRequest(request);
         post.setCommentCount(0);
         post.setCreatedAt(Instant.now());
         post = postRepository.save(post);
 
-        return PostMapper.INSTANCE.createPostResponseMap(post);
+        return PostMapper.INSTANCE.mapToCreatePostResponse(post);
     }
 
     // Update post
@@ -56,12 +56,12 @@ public class PostService {
         }
 
         Post targetPost = targetPostOptional.get();
-        PostMapper.INSTANCE.updatePostRequestMap(updatePostRequest, targetPost);
+        PostMapper.INSTANCE.mapToUpdatePostRequest(updatePostRequest, targetPost);
         targetPost.setUpdatedAt(Instant.now());
 
         Post updatedPost = postRepository.save(targetPost);
 
-        return PostMapper.INSTANCE.updatePostResponseMap(updatedPost);
+        return PostMapper.INSTANCE.mapToUpdatePostResponse(updatedPost);
     }
 
     // Delete post
