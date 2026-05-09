@@ -18,7 +18,6 @@ public interface PostMapper {
 
     // Create Post
     Post mapToCreatePostRequest(CreatePostRequest createPost);
-    // @Mapping(source = "slug", target = "path") // jika terdapat perbedaan nama field, maka ini adalah solusinya
     CreatePostResponse mapToCreatePostResponse(Post post);
 
     // Get Post by Slug

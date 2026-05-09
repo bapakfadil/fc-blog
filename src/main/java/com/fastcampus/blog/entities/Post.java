@@ -3,6 +3,7 @@ package com.fastcampus.blog.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 import java.time.Instant;
 import java.util.List;
@@ -32,4 +33,9 @@ public class Post {
     @JsonIgnore
     private List<Comment> comments;
     private Integer commentCount;
+
+    // eksplisit getter untuk fixing mapping data yang salah
+    public boolean getIsPublished() {
+        return this.isPublished;
+    }
 }

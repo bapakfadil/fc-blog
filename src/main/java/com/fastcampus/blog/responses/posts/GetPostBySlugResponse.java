@@ -17,6 +17,7 @@ public class GetPostBySlugResponse {
     private String slug;
     private Instant createdAt;
     private Instant updatedAt;
+    private boolean isPublished;
     private Instant publishedAt;
     private Integer commentCount;
 }
