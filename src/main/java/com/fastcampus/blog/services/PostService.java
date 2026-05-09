@@ -52,17 +52,13 @@ public class PostService {
 
     // Update post
     public UpdatePostResponse updatePost(String slug, UpdatePostRequest updatePostRequest) {
-        Optional<Post> targetPostOptional = postRepository.findPostBySlugAndIsDeleted(slug, false);
-        if (targetPostOptional.isEmpty()) {
-            return null;
-        }
-
+        Optional<Post> targetPostOptional = Optional.of(postRepository
+                .findPostBySlugAndIsDeleted(slug, false)
+                .orElseThrow(() -> new ApiException("Post not found", HttpStatus.NOT_FOUND)));
         Post targetPost = targetPostOptional.get();
         PostMapper.INSTANCE.mapToUpdatePostRequest(updatePostRequest, targetPost);
         targetPost.setUpdatedAt(Instant.now());
-
         Post updatedPost = postRepository.save(targetPost);
-
         return PostMapper.INSTANCE.mapToUpdatePostResponse(updatedPost);
     }
 
