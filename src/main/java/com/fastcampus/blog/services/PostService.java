@@ -66,7 +66,7 @@ public class PostService {
     // Delete post
     public DeletePostResponse deletePost(Integer id) {
         Post targetPost = postRepository
-                .findPostByIdAndIsDeleted(id, false)
+                .findPostById(id)
                 .orElseThrow(() -> new ApiException("Post not found", HttpStatus.NOT_FOUND));
         targetPost.setDeleted(true);
         targetPost.setDeletedAt(Instant.now());
@@ -87,4 +87,4 @@ public class PostService {
 }
 
 // TODO : recheck implementasi DTO mapper pada Post dan Comment service
-// TODO : rewatch 1-8-5
+// TODO : recheck response api pada get request di post dan comment

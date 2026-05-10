@@ -15,4 +15,5 @@ public interface PostRepository extends CrudRepository<Post, Integer>, PagingAnd
     Optional<Post> findPostBySlugAndIsDeleted(String slug, boolean isDeleted);
     Optional<Post> findPostByIdAndIsDeleted(Integer id, boolean isDeleted);
     Page<Post> findAllByIsDeleted(boolean isDeleted, Pageable pageable);
+    Optional<Post> findPostById(Integer id);
 }

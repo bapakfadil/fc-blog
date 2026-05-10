@@ -17,4 +17,13 @@ public class GetCommentResponse {
     private String email;
     private String body;
     private Instant createdAt;
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Post{
+        private String title;
+        private String slug;
+    }
 }
