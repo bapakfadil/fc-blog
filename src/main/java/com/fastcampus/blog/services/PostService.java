@@ -5,20 +5,20 @@ import com.fastcampus.blog.exceptions.ApiException;
 import com.fastcampus.blog.mapper.PostMapper;
 import com.fastcampus.blog.repositories.PostRepository;
 import com.fastcampus.blog.requests.posts.CreatePostRequest;
+import com.fastcampus.blog.requests.posts.GetPostsRequest;
 import com.fastcampus.blog.requests.posts.UpdatePostRequest;
-import com.fastcampus.blog.responses.posts.CreatePostResponse;
-import com.fastcampus.blog.responses.posts.GetPostBySlugResponse;
-import com.fastcampus.blog.responses.posts.PublishPostResponse;
-import com.fastcampus.blog.responses.posts.UpdatePostResponse;
+import com.fastcampus.blog.responses.posts.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -27,9 +27,11 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
-    // Get all posts
-    public List<Post> getPosts() {
-        return postRepository.findAllByIsDeleted(false);
+    // Get all posts with pagination
+    public List<GetPostsResponse> getPosts(GetPostsRequest getPostsRequest) {
+        Pageable pageable = PageRequest.of(getPostsRequest.getPageNo(), getPostsRequest.getLimit());
+        Page<Post> postPage = postRepository.findAllByIsDeleted(false, pageable);
+        return PostMapper.INSTANCE.mapToGetPostsResponseList(postPage.getContent());
     }
 
     // Get post by Slug
@@ -52,10 +54,9 @@ public class PostService {
 
     // Update post
     public UpdatePostResponse updatePost(String slug, UpdatePostRequest updatePostRequest) {
-        Optional<Post> targetPostOptional = Optional.of(postRepository
+        Post targetPost = postRepository
                 .findPostBySlugAndIsDeleted(slug, false)
-                .orElseThrow(() -> new ApiException("Post not found", HttpStatus.NOT_FOUND)));
-        Post targetPost = targetPostOptional.get();
+                .orElseThrow(() -> new ApiException("Post not found", HttpStatus.NOT_FOUND));
         PostMapper.INSTANCE.mapToUpdatePostRequest(updatePostRequest, targetPost);
         targetPost.setUpdatedAt(Instant.now());
         Post updatedPost = postRepository.save(targetPost);

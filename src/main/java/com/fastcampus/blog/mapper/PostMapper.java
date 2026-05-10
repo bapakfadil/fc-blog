@@ -3,14 +3,13 @@ package com.fastcampus.blog.mapper;
 import com.fastcampus.blog.entities.Post;
 import com.fastcampus.blog.requests.posts.CreatePostRequest;
 import com.fastcampus.blog.requests.posts.UpdatePostRequest;
-import com.fastcampus.blog.responses.posts.CreatePostResponse;
-import com.fastcampus.blog.responses.posts.GetPostBySlugResponse;
-import com.fastcampus.blog.responses.posts.PublishPostResponse;
-import com.fastcampus.blog.responses.posts.UpdatePostResponse;
+import com.fastcampus.blog.responses.posts.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List; // Import List
 
 @Mapper
 public interface PostMapper {
@@ -30,4 +29,7 @@ public interface PostMapper {
     // Publish Post
     PublishPostResponse mapToPublishPost (Post post);
 
+    // Get Posts
+    GetPostsResponse mapToGetPostsResponse(Post post);
+    List<GetPostsResponse> mapToGetPostsResponseList(List<Post> posts); // Tambahkan ini
 }
