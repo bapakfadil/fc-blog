@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,9 +23,17 @@ public class ApiExceptionHandler {
 
     // General input method exception handling
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiExceptionResponse> handler(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ApiExceptionResponse> handler(MethodArgumentNotValidException methodException) {
         List<String> listErrorMessages = new ArrayList<>();
-        ex.getBindingResult().getFieldErrors().forEach(fieldError -> listErrorMessages.add(fieldError.getDefaultMessage()));
+        methodException.getBindingResult().getFieldErrors().forEach(fieldError -> listErrorMessages.add(fieldError.getDefaultMessage()));
+        ApiExceptionResponse apiExceptionResponse = ApiExceptionResponse.builder().errorMessages(listErrorMessages).build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiExceptionResponse);
+    }
+
+    // General SQL integrity exception handling
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<ApiExceptionResponse> handler(SQLIntegrityConstraintViolationException sqlIntegrityException) {
+        List<String> listErrorMessages = new ArrayList<>(Collections.singletonList(sqlIntegrityException.getMessage()));
         ApiExceptionResponse apiExceptionResponse = ApiExceptionResponse.builder().errorMessages(listErrorMessages).build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiExceptionResponse);
     }
