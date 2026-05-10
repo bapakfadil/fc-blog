@@ -64,14 +64,14 @@ public class PostService {
     }
 
     // Delete post
-    public boolean deletePost(Integer id) {
+    public DeletePostResponse deletePost(Integer id) {
         Post targetPost = postRepository
                 .findPostByIdAndIsDeleted(id, false)
                 .orElseThrow(() -> new ApiException("Post not found", HttpStatus.NOT_FOUND));
         targetPost.setDeleted(true);
         targetPost.setDeletedAt(Instant.now());
         postRepository.save(targetPost);
-        return true;
+        return PostMapper.INSTANCE.mapToDeletePostResponse(targetPost);
     }
 
     // Publish post
@@ -85,3 +85,6 @@ public class PostService {
         return PostMapper.INSTANCE.mapToPublishPost(targetPost);
     }
 }
+
+// TODO : recheck implementasi DTO mapper pada Post dan Comment service
+// TODO : rewatch 1-8-5

@@ -49,7 +49,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public Boolean deletePostById(@PathVariable Integer id) {
+    public DeletePostResponse deletePostById(@PathVariable Integer id) {
         return postService.deletePost(id);
     }
 

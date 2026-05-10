@@ -29,6 +29,9 @@ public interface PostMapper {
     // Publish Post
     PublishPostResponse mapToPublishPost (Post post);
 
+    // Delete Post
+    DeletePostResponse mapToDeletePostResponse(Post post);
+
     // Get Posts
     GetPostsResponse mapToGetPostsResponse(Post post);
     List<GetPostsResponse> mapToGetPostsResponseList(List<Post> posts); // Tambahkan ini
