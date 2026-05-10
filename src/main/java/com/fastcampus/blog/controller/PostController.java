@@ -26,7 +26,7 @@ public class PostController {
     }
 
     @GetMapping("/{slug}")
-    public GetPostBySlugResponse getPostBySlugResponse(
+    public GetPostBySlugResponse getPostBySlug(
             @PathVariable
             @Size(min = 2, message = "Minimal 2 character.")
             String slug) {
