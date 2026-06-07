@@ -1,5 +1,7 @@
 package com.fastcampus.blog.services;
 
+import com.fastcampus.blog.properties.SecretProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,12 +12,19 @@ import org.springframework.stereotype.Service;
 @Service
 @Primary
 public class CustomUserDetailService implements UserDetailsService {
+
+    @Autowired
+    SecretProperties secretProperties;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO : ubah metode penggunaan value menjadi dari file properti nanti (latest 06.07.2026)
+        if (username == null || !username.equals(secretProperties.getUserUsername())) {
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+
         return User.builder()
-                .username(username)
-                .password("${USER_PASSWORD}")
+                .username(secretProperties.getUserUsername())
+                .password(secretProperties.getUserPassword())
                 .build();
     }
 }
