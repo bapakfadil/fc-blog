@@ -1,6 +1,5 @@
 package com.fastcampus.blog.controller;
 
-import com.fastcampus.blog.entities.Post;
 import com.fastcampus.blog.requests.posts.CreatePostRequest;
 import com.fastcampus.blog.requests.posts.GetPostsRequest;
 import com.fastcampus.blog.requests.posts.UpdatePostRequest;
@@ -12,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/posts")
-public class PostController {
+@RequestMapping("/api/admin/posts")
+public class PostAdminController {
 
     @Autowired
     PostService postService;

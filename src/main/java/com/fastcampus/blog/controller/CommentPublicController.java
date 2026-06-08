@@ -12,23 +12,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comments")
-public class CommentController {
+@RequestMapping("/api/public/comments")
+public class CommentPublicController {
 
     @Autowired
     CommentService commentService;
 
     @GetMapping
     public List<Comment> getComments(
-            @RequestParam(required = false) String postSlug,
+            @RequestParam String postSlug,
             @RequestParam(required = false) Integer pageNo,
             @RequestParam(required = false) Integer limit) {
         return commentService.getComments(postSlug, pageNo, limit);
-    }
-
-    @GetMapping("/{id}")
-    public GetCommentResponse getComment(@PathVariable Integer id) {
-        return commentService.getComment(id);
     }
 
     @PostMapping

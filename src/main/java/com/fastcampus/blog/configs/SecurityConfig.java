@@ -35,9 +35,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         registry -> registry
                                 // hanya '/api/login' yang diizinkan bebas akses
-                                .requestMatchers("/api/login").permitAll()
-                                .anyRequest()
-                                .authenticated()
+                                .requestMatchers("/api/public/**").permitAll()
+                                .requestMatchers("/api/admin/**").authenticated()
+                                .anyRequest().permitAll()
                 )
                 // Aktivasi autentikasi HTTP basic
                 //httpBasic(Customizer.withDefaults())
