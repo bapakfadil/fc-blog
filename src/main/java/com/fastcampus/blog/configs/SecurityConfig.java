@@ -8,13 +8,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -22,6 +22,9 @@ public class SecurityConfig {
 
     @Autowired
     CustomUserDetailService customUserDetailService;
+
+    @Autowired
+    JwtAuthFilter jwtAuthFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -31,11 +34,14 @@ public class SecurityConfig {
                 // Mengatur siapa saja yang dapat mengakses endpoint API
                 .authorizeHttpRequests(
                         registry -> registry
+                                // hanya '/api/login' yang diizinkan bebas akses
+                                .requestMatchers("/api/login").permitAll()
                                 .anyRequest()
                                 .authenticated()
                 )
                 // Aktivasi autentikasi HTTP basic
-                .httpBasic(Customizer.withDefaults())
+                //httpBasic(Customizer.withDefaults())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
