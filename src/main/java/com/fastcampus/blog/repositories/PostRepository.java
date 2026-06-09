@@ -16,4 +16,6 @@ public interface PostRepository extends CrudRepository<Post, Integer>, PagingAnd
     Optional<Post> findPostByIdAndIsDeleted(Integer id, boolean isDeleted);
     Page<Post> findAllByIsDeleted(boolean isDeleted, Pageable pageable);
     Optional<Post> findPostById(Integer id);
+
+    List<Post> findByIsDeleted(boolean b);
 }
