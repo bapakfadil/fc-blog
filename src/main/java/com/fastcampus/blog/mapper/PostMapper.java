@@ -27,12 +27,14 @@ public interface PostMapper {
     UpdatePostResponse mapToUpdatePostResponse(Post post);
 
     // Publish Post
+    @Mapping(source = "isPublished", target = "published")
     PublishPostResponse mapToPublishPost (Post post);
 
     // Delete Post
     DeletePostResponse mapToDeletePostResponse(Post post);
 
     // Get Posts
+    @Mapping(source = "isPublished", target = "published")
     GetPostsResponse mapToGetPostsResponse(Post post);
     List<GetPostsResponse> mapToGetPostsResponseList(List<Post> posts); // Tambahkan ini
 }
